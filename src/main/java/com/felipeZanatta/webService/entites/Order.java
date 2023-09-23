@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.felipeZanatta.webService.enums.Order_Status;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,7 +21,11 @@ import jakarta.persistence.Table;
 //		quando feita requisição do lado do muitos, o lado do um é puxado automatico (lazy loading)
 // JoimColum nome da chave estrangeira que está no BD
 // JsonFormat para formatar Instant no padrao ISO8601
-
+// No atributo orderstatus é Integer para referenciar o valor inserido pelo usuario
+// getOrderStatus recebe o valor em int e converte para Order_Status em pelo metodo valueOf do enum Order_Status
+// setOrderStatus recebe o valor com enum Order_Staus e converte para int pelo metodo getCode() do enum Order_Status
+//		ainda o if é pra garantir q não seja inseirdo valor null
+// no construtor o valor atribuido a variavel orderStatus é feito pelo metodo set
 
 
 @Entity
@@ -41,6 +46,7 @@ public class Order implements Serializable {
 	private long id;
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
+	private Integer orderStatus;
 	
 
 	
@@ -55,11 +61,12 @@ public class Order implements Serializable {
 		
 	}
 
-	public Order(long id, Instant moment, User client) {
+	public Order(long id, Instant moment, User client, Order_Status orderStatus) {
 		super();
 		this.id = id;
 		this.moment = moment;
 		this.client = client;
+		setOrderStatus(orderStatus);
 	}
 
 	public long getId() {
@@ -84,6 +91,17 @@ public class Order implements Serializable {
 
 	public void setClient(User client) {
 		this.client = client;
+	}
+	
+
+	public Order_Status getOrderStatus() {
+		return Order_Status.valueOf(orderStatus);
+	}
+
+	public void setOrderStatus(Order_Status orderStatus) {
+		if(orderStatus != null) {
+			this.orderStatus = orderStatus.getCode();
+		}
 	}
 
 	@Override
