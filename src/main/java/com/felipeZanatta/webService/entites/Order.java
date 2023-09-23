@@ -4,16 +4,24 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 
 // Classe Instante melhor que Date. Surgiu a partir Java8
 // @ManyToOne muitos para um (Muitos Order para um User). Comforme projeto
+//		quando feita requisição do lado do muitos, o lado do um é puxado automatico (lazy loading)
+// JoimColum nome da chave estrangeira que está no BD
+// JsonFormat para formatar Instant no padrao ISO8601
+
+
 
 @Entity
 @Table(name = "tb_order")
@@ -25,16 +33,20 @@ public class Order implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	
+	
+	
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant moment;
 	
-	
-	
+
 	
 	// -------- ASSOCIACOES DO PROJETO --------
 	@ManyToOne
+	@JoinColumn(name = "client_id")
 	private User client;
 
 

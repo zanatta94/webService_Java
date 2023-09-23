@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,6 +18,9 @@ import jakarta.persistence.Table;
 // @GeneratedValeu para autoincrementar o id
 // coleção que nem neste caso é a associação orders, apenas gera Get
 // @OneToMany um User para muitas Order. Nos parenteses vai o nome do atributo da outra classe associada
+//		quando feita requisição do lado do um, o lado do muitos NÃO é puxado automatico(lazy loading)
+// 		se o JsonIgnore estiver no outro lado, aí sim buscaria, e a confirguração do jpa no application.properties tivesse igual
+// JsonIgnore como se trata de uma associação de mão dupla, para evitar loop, pelo menos em um lado se coloca
 
 
 @Entity
@@ -40,6 +45,7 @@ public class User implements Serializable {
 	
 	
 	// -------- ASSOCIACOES DO PROJETO --------
+	@JsonIgnore
 	@OneToMany(mappedBy = "client")
 	private List<Order> orders = new ArrayList<>();
 	
