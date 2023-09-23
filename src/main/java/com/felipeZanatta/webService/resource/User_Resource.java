@@ -13,13 +13,14 @@ import com.felipeZanatta.webService.entites.User;
 import com.felipeZanatta.webService.services.User_Service;
 
 
-//Classe da camada de recursos
-//RequestController é para identificar a classe como um recurso web implementado por um controlador Rest
-//RequestMapping para dar um nome ao recurso
-//@GetMapping passando {id} para a passar o valor do id na url, pra indicar que tem um parametro
-//@PathVariable para a reuqisição aceitar o parametro passado na URL
-
-
+// Classe da camada de recursos
+// RequestController é para identificar a classe como um recurso web implementado por um controlador Rest
+// RequestMapping para dar um nome ao recurso
+// @GetMapping passando {id} para a passar o valor do id na url, pra indicar que tem um parametro
+// @PathVariable para a requisição aceitar o parametro passado na URL
+// ResponseEntity tipo específico do spring para retornar respostas de requisições web
+// o return .Ok é pra retornar resposta com sucesso n HTTP
+// o body é para retornar o corpo da resposta, neste caso a lista de usuario
 
 @RestController
 @RequestMapping(value = "/users")
@@ -28,13 +29,12 @@ public class User_Resource {
 	@Autowired
 	private User_Service service;
 	
-	//ResponseEntity tipo específico do spring para retornar respostas de requisições web
+	
 	@GetMapping
 	public ResponseEntity<List<User>> findAll() {
 		List<User> list = service.findAll();
 		
-		//o returno .Ok é pra retornar resposta com sucesso n HTTP
-		//o body é para retornar o corpo da resposta, neste caso a lista de usuario
+		
 		return ResponseEntity.ok().body(list);
 	}
 	

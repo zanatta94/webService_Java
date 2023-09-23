@@ -10,11 +10,11 @@ import com.felipeZanatta.webService.entites.User;
 import com.felipeZanatta.webService.repositories.User_Repository;
 
 
-//@Component registra a classe no mecanismo gestão de dependecia
-//@Component para registrar no mecanismo de injeção de dependencia ocorrer na camada de controle (Resource)
-//@Service para registrar um serviço na camada de serviço (Usado para ser mais específico) camada de serviço
-//Tb exite o @Repositoy para registrar um repository
-//Optional é um modelo de objeto a partir do java8
+// @Component registra a classe no mecanismo gestão de dependecia
+// @Component para registrar no mecanismo de injeção de dependencia ocorrer na camada de controle (Resource)
+// @Service para registrar um serviço na camada de serviço (Usado para ser mais específico) camada de serviço
+// Tb exite o @Repositoy para registrar um repository
+// Optional é um modelo de objeto a partir do Java8
 
 
 @Service

@@ -11,17 +11,16 @@ import com.felipeZanatta.webService.entites.User;
 import com.felipeZanatta.webService.repositories.User_Repository;
 
 
-//esta é uma classe auxiliar de configuração, para popular o BD com alguns objetos
-//@Configuration para indicar que é uma classe auxiliar de conf
-//@Profile pra indicar o perfil conforme no arquiqui application-test
-//CommandLineRunner para executar o que estiver dentro do metedo run quando o programa for iniciado
+// Esta é uma classe auxiliar de configuração, para popular o BD com alguns objetos
+// @Configuration para indicar que é uma classe auxiliar de conf
+// @Profile pra indicar o perfil conforme no arquiqui application-test
+// CommandLineRunner para executar o que estiver dentro do metedo run quando o programa for iniciado
+// @Autowired associa uma instacia do User_Repository nesta classe
 
 @Configuration
 @Profile("test")
 public class TestConfig implements CommandLineRunner {
 	
-	
-	//@Autowired associa uma instacia do User_Repository nesta classe
 	@Autowired
 	private User_Repository userRepository;
 
