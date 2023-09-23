@@ -8,6 +8,9 @@ import com.felipeZanatta.webService.entites.User;
 //O repositório extende o JpaRepositoóry passado a entidade e o tipo do id
 //todos repositories interface, JpaRepository tambem é
 //não precisa criar a implementação pq extende a implemntação padrão do JpaRepository
+//@Repository não inserido pois já herda da extensão
+
+
 public interface User_Repository extends JpaRepository<User, Long>{
 
 }
