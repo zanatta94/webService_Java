@@ -64,6 +64,18 @@ public class TestConfig implements CommandLineRunner {
 		Product p5 = new Product(0l, "Rails for Dummies", "Cras fringilla convallis sem vel faucibus.", 100.99, "");
 		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
 		
+		// Adiciona uma catagoria a coleção de categorias da classe Product
+		p1.getCategories().add(cat2);
+		p2.getCategories().add(cat1);
+		p2.getCategories().add(cat3);
+		p3.getCategories().add(cat3);
+		p4.getCategories().add(cat3);
+		p5.getCategories().add(cat2);
+		// para salvar as associações aqui no JPA se salva de novo os pordutos após as modificações. No SQL é diferente!
+		productRepository.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+		
+		
+		
 		User u1 = new User(0l, "Maria Brown", "maria@gmail.com", "988888888", "123456");
 		User u2 = new User(0l, "Alex Green", "alex@gmail.com", "977777777", "123456");
 		userRepository.saveAll(Arrays.asList(u1, u2));

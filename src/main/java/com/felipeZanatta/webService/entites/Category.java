@@ -5,10 +5,13 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 
@@ -18,6 +21,8 @@ import jakarta.persistence.Table;
 // O Set é uma interface, então para instaciar usei HashSet por ser uma classe correspondente da interface
 // Para coleções cria-se apenas o GET, pois não faz sentido trocar uma coleção com SET, mas sim add ou remover elementos
 // Coleções não se coloca no construtor
+// mappedBy dentro do ManyToMany é para mapear a associação que tem com classe Product
+// usei JsonIgnore para evitar loop infinito dessas associação bidirecional entre Category e Product
 
 
 
@@ -40,6 +45,8 @@ public class Category implements Serializable {
 	
 	
 	// -------- ASSOCIAÇÕES --------
+	@JsonIgnore
+	@ManyToMany(mappedBy = "categories")
 	private Set<Product> products = new HashSet<>();
 	
 	

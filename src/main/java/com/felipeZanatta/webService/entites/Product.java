@@ -9,6 +9,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 
@@ -17,6 +20,9 @@ import jakarta.persistence.Table;
 // Neste caso, o Product não pode repetir a categoria. Podem ter várias cateforias, mas não repetidas
 // O Set é uma interface, então para instaciar usei HashSet por ser uma classe correspondente da interface
 // Coleções não se coloca no construtor
+// @ManyToMany anotation de muitos para um 
+// @JoinTable para o nome da tabela e quais chaves estrangeiras que vão associar as tabelas
+// joinColumn identifica chave estrangeira dessa classe, da outra classe se identifica com iverseJoimColumns
 
 
 
@@ -40,7 +46,9 @@ public class Product implements Serializable {
 	private String imgUrl;
 	
 	
-	//-------- ASSOCIOACOES --------
+	//-------- ASSOCIACOES --------
+	@ManyToMany
+	@JoinTable(name = "tb_ProductCategory", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
 	private Set<Category> categories = new HashSet<>();
 
 
