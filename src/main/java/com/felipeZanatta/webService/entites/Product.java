@@ -12,18 +12,18 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 
-
 // O Set é uma coleçaõ e usa-se para evitar inserir um objeto igual dentro da lista
 // Set da associação representa um conjunto, assim evita que exitema categorias repetidas na coleção
+// Neste caso, o Product não pode repetir a categoria. Podem ter várias cateforias, mas não repetidas
 // O Set é uma interface, então para instaciar usei HashSet por ser uma classe correspondente da interface
-// Para coleções cria-se apenas o GET, pois não faz sentido trocar uma coleção com SET, mas sim add ou remover elementos
 // Coleções não se coloca no construtor
 
 
 
+
 @Entity
-@Table(name = "tb_category")
-public class Category implements Serializable {
+@Table(name = "tb_product")
+public class Product implements Serializable {
 	
 	/**
 	 * 
@@ -31,56 +31,94 @@ public class Category implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String name;
+	private String description;
+	private double price;
+	private String imgUrl;
 	
 	
-	
-	// -------- ASSOCIAÇÕES --------
-	private Set<Product> products = new HashSet<>();
-	
-	
-	
-	
-	
+	//-------- ASSOCIOACOES --------
+	private Set<Category> categories = new HashSet<>();
 
-	public Category() {
+
+	public Product() {
 		
 	}
 
-	public Category(long id, String name) {
+
+	public Product(long id, String name, String description, double price, String imgUrl) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.imgUrl = imgUrl;
 	}
+
 
 	public long getId() {
 		return id;
 	}
 
+
 	public void setId(long id) {
 		this.id = id;
 	}
+
 
 	public String getName() {
 		return name;
 	}
 
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public Set<Product> getProducts() {
-		return products;
+
+
+	public String getDescription() {
+		return description;
 	}
+
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+
+	public double getPrice() {
+		return price;
+	}
+
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
+
+
+	public Set<Category> getCategories() {
+		return categories;
+	}
+
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
 	}
+
 
 	@Override
 	public boolean equals(Object obj) {
@@ -90,9 +128,12 @@ public class Category implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Category other = (Category) obj;
+		Product other = (Product) obj;
 		return id == other.id;
 	}
+	
+	
+	
 	
 	
 	
