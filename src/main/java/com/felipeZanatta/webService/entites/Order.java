@@ -2,7 +2,9 @@ package com.felipeZanatta.webService.entites;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.felipeZanatta.webService.enums.Order_Status;
@@ -13,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 
@@ -26,6 +29,8 @@ import jakarta.persistence.Table;
 // setOrderStatus recebe o valor com enum Order_Staus e converte para int pelo metodo getCode() do enum Order_Status
 //		ainda o if é pra garantir q não seja inseirdo valor null
 // no construtor o valor atribuido a variavel orderStatus é feito pelo metodo set
+// na associacao items o mappedBy mapeia para o objeto order da classe OrderItem_pk.
+//		assim mapeia uma Order para muitos OrderItem
 
 
 @Entity
@@ -54,6 +59,9 @@ public class Order implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "client_id")
 	private User client;
+	
+	@OneToMany(mappedBy = "id.order")
+	private Set<OrderItem> items = new HashSet<>();
 
 
 	
@@ -102,6 +110,10 @@ public class Order implements Serializable {
 		if(orderStatus != null) {
 			this.orderStatus = orderStatus.getCode();
 		}
+	}
+
+	public Set<OrderItem> getItems() {
+		return items;
 	}
 
 	@Override

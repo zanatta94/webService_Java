@@ -3,6 +3,7 @@ package com.felipeZanatta.webService.entites;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.felipeZanatta.webService.entites.pk.OrderItem_pk;
 
 import jakarta.persistence.EmbeddedId;
@@ -14,6 +15,7 @@ import jakarta.persistence.Table;
 // no construtor o id é setado passando a Order e o Product que vem dos parametros
 // o GET e o SET do id desta classe é feito utilizando os objetos da classe aux OrderItem_pk.
 // @EmbeddedId pois o id se trata de uma chave com posta
+// JsonIgnore no metodo getOrder do id para cortar a associação dupla entre Order e OrderItem para não virar um loop infinito
 
 
 @Entity
@@ -33,7 +35,6 @@ public class OrderItem implements Serializable {
 	
 	
 	
-	
 	public OrderItem() {
 		
 	}
@@ -46,6 +47,7 @@ public class OrderItem implements Serializable {
 		this.price = price;
 	}
 	
+	@JsonIgnore
 	public Order getOrder() {
 		return id.getOrder();
 	}
