@@ -16,7 +16,7 @@ import jakarta.persistence.Table;
 // o GET e o SET do id desta classe é feito utilizando os objetos da classe aux OrderItem_pk.
 // @EmbeddedId pois o id se trata de uma chave com posta
 // JsonIgnore no metodo getOrder do id para cortar a associação dupla entre Order e OrderItem para não virar um loop infinito
-
+// o método getSubTotal está com essa nomenclatura pois é padrão ter o get para Java EE para aparecer no Json
 
 @Entity
 @Table(name = "tb_OrderItem")
@@ -79,6 +79,12 @@ public class OrderItem implements Serializable {
 	public void setPrice(double price) {
 		this.price = price;
 	}
+	
+	
+	public Double getSubTotal() {
+		return price * quantity;
+	}
+	
 
 	@Override
 	public int hashCode() {
