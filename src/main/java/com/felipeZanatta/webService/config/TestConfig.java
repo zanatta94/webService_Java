@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Profile;
 import com.felipeZanatta.webService.entites.Category;
 import com.felipeZanatta.webService.entites.Order;
 import com.felipeZanatta.webService.entites.OrderItem;
+import com.felipeZanatta.webService.entites.Payment;
 import com.felipeZanatta.webService.entites.Product;
 import com.felipeZanatta.webService.entites.User;
 import com.felipeZanatta.webService.enums.Order_Status;
@@ -96,6 +97,11 @@ public class TestConfig implements CommandLineRunner {
 		OrderItem oi4 = new OrderItem(o3, p5, 2, p5.getPrice());
 		orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3, oi4));
 		
+		
+		// pra salvar um objeto dependente em OneToMany, chama-se o repository do objeto independente da associação
+		Payment pay1 = new Payment(0l, Instant.parse("2019-06-20T21:53:07Z"), o1);
+		o1.setPayment(pay1);
+		orderRepository.save(o1);
 		
 		
 	}

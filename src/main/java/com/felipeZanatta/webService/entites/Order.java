@@ -9,6 +9,7 @@ import java.util.Set;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.felipeZanatta.webService.enums.Order_Status;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,6 +17,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 
@@ -31,6 +33,8 @@ import jakarta.persistence.Table;
 // no construtor o valor atribuido a variavel orderStatus é feito pelo metodo set
 // na associacao items o mappedBy mapeia para o objeto order da classe OrderItem_pk.
 //		assim mapeia uma Order para muitos OrderItem
+// cascade mapeando as duas entidades para ter o mesmo id, no caso de mapear OneToOne com id ele se torna obrigatório
+//		se o Payment for cód 5 o Order tb tem que ser o 5
 
 
 @Entity
@@ -41,9 +45,6 @@ public class Order implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	
-	
 	
 	
 	@Id
@@ -62,6 +63,9 @@ public class Order implements Serializable {
 	
 	@OneToMany(mappedBy = "id.order")
 	private Set<OrderItem> items = new HashSet<>();
+	
+	@OneToOne(mappedBy = "order", cascade = CascadeType.ALL)
+	private Payment payment;
 
 
 	
@@ -114,6 +118,14 @@ public class Order implements Serializable {
 
 	public Set<OrderItem> getItems() {
 		return items;
+	}
+
+	public Payment getPayment() {
+		return payment;
+	}
+
+	public void setPayment(Payment payment) {
+		this.payment = payment;
 	}
 
 	@Override
