@@ -15,6 +15,7 @@ import com.felipeZanatta.webService.repositories.User_Repository;
 // @Service para registrar um serviço na camada de serviço (Usado para ser mais específico) camada de serviço
 // Tb exite o @Repositoy para registrar um repository
 // Optional é um modelo de objeto a partir do Java8
+// no insert o método save por padrão já returna o método salvo, é só por o return
 
 
 @Service
@@ -31,6 +32,10 @@ public class User_Service {
 	public User findById(long id) {
 		Optional<User> obj = repository.findById(id);
 		return obj.get();
+	}
+	
+	public User insert(User obj) {
+		return repository.save(obj);
 	}
 
 }
