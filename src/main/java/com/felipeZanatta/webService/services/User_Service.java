@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.felipeZanatta.webService.entites.User;
 import com.felipeZanatta.webService.repositories.User_Repository;
+import com.felipeZanatta.webService.services.exceptions.ResourceNotFoundException;
 
 import jakarta.persistence.Entity;
 
@@ -19,7 +20,8 @@ import jakarta.persistence.Entity;
 // Optional é um modelo de objeto a partir do Java8
 // no insert o método save por padrão já returna o método salvo, é só por o return
 // no update o getRefenceById vai instaciar o User mas apensa prapar o objeto monitorado para mexer e dps efetuar a operação com o BD
-
+// metodo updateData criado para utlizar no método update
+// findById o orElseThrow() vai tentar dar o get, se não tiver o User ele vai lançar a exceção personalziada com a expressão lambda dentro dos pareteses
 
 @Service
 public class User_Service {
@@ -34,7 +36,7 @@ public class User_Service {
 	
 	public User findById(long id) {
 		Optional<User> obj = repository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
 	public User insert(User obj) {
@@ -51,7 +53,7 @@ public class User_Service {
 		updataData(entity, obj);
 		return repository.save(entity);
 	}
-
+	
 	private void updataData(User entity, User obj) {
 		entity.setName(obj.getName());
 		entity.setEmail(obj.getEmail());
