@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,6 +35,8 @@ import com.felipeZanatta.webService.services.User_Service;
 //		fromCurrentRequest().path() -> ele vai montar um padrão parareceber um recurso que vem na url após o /users. Neste caso o id
 //		buildAndExpand -> espera o valor que inserir após o /users
 // 		toUri -> para converter para uri
+// no método delete usa-se o void pois não vai ser retornado nenhum corpo
+// no content por ser uma resposata sem corpo e para tratar o cód 204 http
 
 
 @RestController
@@ -66,6 +69,9 @@ public class User_Resource {
 		return ResponseEntity.created(uri).body(obj);
 	}
 	
-	
-
+	@DeleteMapping(value = "/{id}")
+	public ResponseEntity<Void> delete(@PathVariable long id) {
+		service.delete(id);
+		return ResponseEntity.noContent().build();
+	}
 }
