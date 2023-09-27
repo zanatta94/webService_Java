@@ -14,6 +14,7 @@ import com.felipeZanatta.webService.services.exceptions.DatabaseException;
 import com.felipeZanatta.webService.services.exceptions.ResourceNotFoundException;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EntityNotFoundException;
 
 
 // @Component registra a classe no mecanismo gestão de dependecia
@@ -64,10 +65,21 @@ public class User_Service {
 	}
 	
 	public User update(long id, User obj) {
-		User entity = repository.getReferenceById(id);
 		
-		updataData(entity, obj);
-		return repository.save(entity);
+		try {
+			User entity = repository.getReferenceById(id);
+			
+			updataData(entity, obj);
+			return repository.save(entity);
+		}
+		catch(EntityNotFoundException e) {
+			throw new ResourceNotFoundException(id);
+		}
+		catch(RuntimeException e) {
+			e.printStackTrace();
+			throw new ResourceNotFoundException(id);
+		}
+		
 	}
 	
 	private void updataData(User entity, User obj) {
